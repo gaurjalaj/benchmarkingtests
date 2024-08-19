@@ -30,7 +30,7 @@ const App = () => {
       setIsParallelButtonDisabled(true);
       const start = Date.now();
       const multipleParallelRes =
-        await NativeModules.MultiplyStats.multiplyParallel(count);
+        await NativeModules.MultiplyStats.multiplyParallel(Math.pow(2, count));
       const end = Date.now();
       const timeTaken = end - start;
       console.log('[handleMultipleParallel] timeTaken: ', timeTaken);
@@ -56,7 +56,7 @@ const App = () => {
       setIsParallelButtonDisabled(true);
       const start = Date.now();
       const multipleIterative =
-        await NativeModules.MultiplyStats.multiplyIterative(count);
+        await NativeModules.MultiplyStats.multiplyIterative(Math.pow(2, count));
       // console.log({multipleIterative});
       const end = Date.now();
       const timeTaken = end - start;
@@ -72,6 +72,16 @@ const App = () => {
       setIsParallelButtonDisabled(false);
     }
   };
+
+  const testtodownload = async() => {
+    try {
+      // const testtodownloadRes = await NativeModules.MultiplyStats.saveToDownloads("yguyguybvhjbvu", "testdownload.txt");
+      const testtodownloadRes = await NativeModules.MultiplyStats.saveToDownloadsToCustomDir("new data", "zunu", "ZunuLogin_13_08_2024.zrf");
+      console.log({testtodownloadRes});
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <View
@@ -171,6 +181,8 @@ const App = () => {
           {timeTaken / 1000} seconds
         </Text>
       )}
+
+      <Button onPress={testtodownload} title='testtodownload' />
     </View>
   );
 };
