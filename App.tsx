@@ -1,3 +1,8 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable prettier/prettier */
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {
   ActivityIndicator,
@@ -73,15 +78,20 @@ const App = () => {
     }
   };
 
-  const testtodownload = async() => {
+  const testtodownload = async () => {
     try {
       // const testtodownloadRes = await NativeModules.MultiplyStats.saveToDownloads("yguyguybvhjbvu", "testdownload.txt");
-      const testtodownloadRes = await NativeModules.MultiplyStats.saveToDownloadsToCustomDir("new data", "zunu", "ZunuLogin_13_08_2024.zrf");
+      const testtodownloadRes =
+        await NativeModules.MultiplyStats.saveToDownloadsToCustomDir(
+          'new data',
+          'zunu',
+          'ZunuLogin_13_08_2024.zrf',
+        );
       console.log({testtodownloadRes});
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   return (
     <View
@@ -119,6 +129,7 @@ const App = () => {
           alignSelf: 'center',
           marginTop: 100,
           padding: 10,
+          color: '#fff'
         }}
         onChangeText={text => {
           const numberValue = text ? parseInt(text) : 0;
@@ -134,6 +145,7 @@ const App = () => {
         placeholder="Enter count"
         inputMode="numeric"
         keyboardType="numeric"
+        placeholderTextColor="#fff"
       />
       <View
         style={{
@@ -182,7 +194,7 @@ const App = () => {
         </Text>
       )}
 
-      <Button onPress={testtodownload} title='testtodownload' />
+      {/* <Button onPress={testtodownload} title="testtodownload" /> */}
     </View>
   );
 };
