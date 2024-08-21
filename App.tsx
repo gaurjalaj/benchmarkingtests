@@ -12,8 +12,11 @@ import {
   TextInput,
   View,
 } from 'react-native';
+import { useSoutListner } from './SoutListner';
 
 const App = () => {
+  useSoutListner();
+  const [availProcessors, setAvailProcessors] = useState<number | null>(null);
   const [count, setCount] = useState<number>(0);
 
   const [isParallelButtonDisabled, setIsParallelButtonDisabled] =
@@ -35,10 +38,10 @@ const App = () => {
       setIsParallelButtonDisabled(true);
       const start = Date.now();
       const multipleParallelRes =
-        await NativeModules.MultiplyStats.multiplyParallel(Math.pow(2, count));
+        await NativeModules.MultiplyStats.multiplyParallel(count);
       const end = Date.now();
       const timeTaken = end - start;
-      console.log('[handleMultipleParallel] timeTaken: ', timeTaken);
+      // console.log('[handleMultipleParallel] timeTaken: ', timeTaken);
       // console.log({multipleParallelRes});
       setisIterativeButtonDisabled(false);
       setIsParallelButtonDisabled(false);
@@ -75,6 +78,16 @@ const App = () => {
       console.error(error);
       setisIterativeButtonDisabled(false);
       setIsParallelButtonDisabled(false);
+    }
+  };
+
+  const checkAvailProcessors = async () => {
+    try {
+      const availProcessorsRes =
+        await NativeModules.MultiplyStats.checkAvailProcessors();
+      setAvailProcessors(availProcessorsRes);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -119,6 +132,22 @@ const App = () => {
         }}>
         multiply_stats
       </Text>
+      <View style={{marginTop: 10}}>
+        <Button
+          onPress={checkAvailProcessors}
+          title="check Available processors"
+        />
+        {availProcessors && (
+          <Text
+            style={{
+              color: '#fff',
+              fontSize: 50,
+              textAlign: 'center',
+            }}>
+            {availProcessors}
+          </Text>
+        )}
+      </View>
       <TextInput
         style={{
           width: '80%',
@@ -129,7 +158,7 @@ const App = () => {
           alignSelf: 'center',
           marginTop: 100,
           padding: 10,
-          color: '#fff'
+          color: '#fff',
         }}
         onChangeText={text => {
           const numberValue = text ? parseInt(text) : 0;
@@ -165,11 +194,13 @@ const App = () => {
           alignSelf: 'center',
           marginTop: 20,
         }}>
-        <Button
+        {/*
+       <Button
           onPress={handleMultipleIterative}
           disabled={isIterativeButtonDisabled}
           title="MultiplyIterative"
         />
+        */}
       </View>
       {showActivityIndicator && (
         <ActivityIndicator

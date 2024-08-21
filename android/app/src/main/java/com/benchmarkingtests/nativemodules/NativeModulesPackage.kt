@@ -11,6 +11,7 @@ class NativeModulesPackage: ReactPackage {
     override fun createNativeModules(reactApplicationContext: ReactApplicationContext): MutableList<NativeModule> {
         val modules: MutableList<NativeModule> = ArrayList()
         modules.add(MultiplyStats(reactApplicationContext))
+        modules.add(SystemOutLogModule(reactApplicationContext))
         return modules;
     }
 

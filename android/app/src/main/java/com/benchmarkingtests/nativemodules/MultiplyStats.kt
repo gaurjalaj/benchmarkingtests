@@ -12,6 +12,7 @@ import com.facebook.react.bridge.WritableArray
 import com.facebook.react.bridge.WritableMap
 import com.facebook.react.bridge.WritableNativeMap
 import com.google.gson.Gson
+import com.ziroh.infinity.Executor
 import com.ziroh.infinity.MultiplyIterative
 import com.ziroh.infinity.MultiplyParallel
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -29,13 +30,23 @@ class MultiplyStats(context: ReactApplicationContext): ReactContextBaseJavaModul
         return MODULENAME
     }
 
+    @ReactMethod
+    fun checkAvailProcessors(promise: Promise){
+        try {
+            val availProcess = Runtime.getRuntime().availableProcessors()
+            promise.resolve(availProcess)
+        }catch (ex: Exception){
+            promise.reject(ex)
+        }
+    }
+
     @OptIn(DelicateCoroutinesApi::class)
     @ReactMethod
     fun multiplyParallel(count: Int, promise: Promise){
         try {
             GlobalScope.launch {
-                val multiplier = MultiplyParallel()
-                var result = multiplier.multiply(count)
+                val executor = Executor();
+                var result = executor.execute(count, Runtime.getRuntime().availableProcessors());
                 Log.d(MODULENAME, "Resolvingnow")
                 promise.resolve("Success")
             }
