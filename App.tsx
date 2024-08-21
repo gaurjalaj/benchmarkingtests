@@ -12,10 +12,10 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { useSoutListner } from './SoutListner';
+import {useSoutListner} from './SoutListner';
 
 const App = () => {
-  useSoutListner();
+  const {meanTimeLog, memoryDeltaLog, setMeanTimeLog, setmemoryDeltaLog} = useSoutListner();
   const [availProcessors, setAvailProcessors] = useState<number | null>(null);
   const [count, setCount] = useState<number>(0);
 
@@ -31,6 +31,8 @@ const App = () => {
 
   const handleMultipleParallel = async () => {
     try {
+      setMeanTimeLog('')
+      setmemoryDeltaLog('')
       setShowActivityIndicator(true);
       setTimeTaken(null);
       console.log('[handleMultipleParallel]', {count});
@@ -171,7 +173,7 @@ const App = () => {
             setisIterativeButtonDisabled(true);
           }
         }}
-        placeholder="Enter count"
+        placeholder="Enter exponential example for 2^9 enter 9"
         inputMode="numeric"
         keyboardType="numeric"
         placeholderTextColor="#fff"
@@ -210,7 +212,7 @@ const App = () => {
           size={50}
         />
       )}
-      {timeTaken && (
+      {/* {timeTaken && (
         <Text
           style={{
             color: '#fff',
@@ -222,6 +224,32 @@ const App = () => {
           }}>
           time taken: {'\n'} {timeTaken} mili seconds {'\n'} or{' '}
           {timeTaken / 1000} seconds
+        </Text> */}
+      {/* )} */}
+      {meanTimeLog && (
+        <Text
+          style={{
+            color: '#fff',
+            alignSelf: 'center',
+            textAlign: 'center',
+            marginTop: 50,
+            fontSize: 40,
+            width: '90%',
+          }}>
+          {meanTimeLog}
+        </Text>
+      )}
+      {memoryDeltaLog && (
+        <Text
+          style={{
+            color: '#fff',
+            alignSelf: 'center',
+            textAlign: 'center',
+            marginTop: 50,
+            fontSize: 40,
+            width: '90%',
+          }}>
+          {memoryDeltaLog}
         </Text>
       )}
 
