@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
   Button,
   NativeModules,
+  ScrollView,
   Text,
   TextInput,
   View,
@@ -15,7 +16,8 @@ import {
 import {useSoutListner} from './SoutListner';
 
 const App = () => {
-  const {meanTimeLog, memoryDeltaLog, setMeanTimeLog, setmemoryDeltaLog} = useSoutListner();
+  const {meanTimeLog, memoryDeltaLog, setMeanTimeLog, setmemoryDeltaLog} =
+    useSoutListner();
   const [availProcessors, setAvailProcessors] = useState<number | null>(null);
   const [count, setCount] = useState<number>(0);
 
@@ -31,8 +33,8 @@ const App = () => {
 
   const handleMultipleParallel = async () => {
     try {
-      setMeanTimeLog('')
-      setmemoryDeltaLog('')
+      setMeanTimeLog('');
+      setmemoryDeltaLog('');
       setShowActivityIndicator(true);
       setTimeTaken(null);
       console.log('[handleMultipleParallel]', {count});
@@ -226,32 +228,34 @@ const App = () => {
           {timeTaken / 1000} seconds
         </Text> */}
       {/* )} */}
-      {meanTimeLog && (
-        <Text
-          style={{
-            color: '#fff',
-            alignSelf: 'center',
-            textAlign: 'center',
-            marginTop: 50,
-            fontSize: 40,
-            width: '90%',
-          }}>
-          {meanTimeLog}
-        </Text>
-      )}
-      {memoryDeltaLog && (
-        <Text
-          style={{
-            color: '#fff',
-            alignSelf: 'center',
-            textAlign: 'center',
-            marginTop: 50,
-            fontSize: 40,
-            width: '90%',
-          }}>
-          {memoryDeltaLog}
-        </Text>
-      )}
+      <ScrollView>
+        {meanTimeLog && (
+          <Text
+            style={{
+              color: '#fff',
+              alignSelf: 'center',
+              textAlign: 'center',
+              marginTop: 50,
+              fontSize: 30,
+              width: '90%',
+            }}>
+            {meanTimeLog}
+          </Text>
+        )}
+        {memoryDeltaLog && (
+          <Text
+            style={{
+              color: '#fff',
+              alignSelf: 'center',
+              textAlign: 'center',
+              marginTop: 50,
+              fontSize: 30,
+              width: '90%',
+            }}>
+            {memoryDeltaLog}
+          </Text>
+        )}
+      </ScrollView>
 
       {/* <Button onPress={testtodownload} title="testtodownload" /> */}
     </View>
